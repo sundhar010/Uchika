@@ -1,0 +1,21 @@
+{{extend 'plugin_layouts/layouts/Boorish.html'}}
+<table class = "table">
+     {{if count != 0:}}
+    <tr> <td><h3><b>Posted by :</b></h3></td><td><a href = "{{=URL('profile.html',args = show.created_by.id)}}"><h3>{{=show.created_by.first_name}}</a> <a href = "{{=URL('show_his_posts',args = show.created_by.id)}}">(has offered {{=count}} rides)</a></h3></td></tr>
+    {{pass}}
+     {{if count == 0:}}
+    <tr> <td><h3><b>Posted by :</b></h3></td><td><h3>{{=show.created_by.first_name}} (offering for the first time)</h3></td></tr>
+    {{pass}}
+    <tr><td><h3><b>From :</b> </h3></td><td><h3> {{=show.From_}} </h3></td></tr>
+    <tr><td><h3><b>To :</b></h3></td><td> <h3>{{=show.To_}}</h3></td></tr>
+    <tr><td><h3><b>Cost per head :</b></h3></td><td><h3> {{=show.Cost_}}</h3></td></tr>
+    <tr><td><h3><b>On :</b></h3></td><td><h3> {{=show.On_}}</h3></td></tr>
+    <tr><td><h3><b>Time :</b></h3></td><td><h3> {{=show.Time_range}}</h3></td></tr>
+    <tr><td><h3><b>Seats :</b></h3></td><td><h3> {{=show.Seats_}}</h3></td></tr>
+    <tr><td><h3><b>Smoking :</b></h3></td><td> <h3>{{=show.Smoking_}}</h3></td></tr>
+    <tr><td><h3><b>Music :</b></h3></td><td><h3> {{=show.Music_}}</h3></td></tr>
+    <tr><td><h3><b>Pets :</b></h3></td><td><h3> {{=show.Pets_}}</h3></td></tr>
+    <tr><td><h3><b>Description :</b></h3></td><td><h3> {{=show.Description_}}</h3></td></tr>
+    <tr><td><h3><b>Licence :</b></h3></td><td><img src = "{{=URL('download',args=show.Driving_Licence_)}}" height = 200px,width = 200px /></td></tr>
+</table>
+  <div align = "right"><a href="{{=URL('book',args = show.created_by)}}"><button  class = "btn btn-primary btn-lg">book your ride</button></a></div>

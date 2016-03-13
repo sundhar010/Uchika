@@ -1,0 +1,12 @@
+{{extend 'plugin_layouts/layouts/Boorish.html'}}
+<h1 >Lets carpool together.</h1>
+<div style = "float:right"></div>
+<div style="position: absolute; top: 200px; right: 50px; width: 450px;height: 900px;">
+ <div class = "well" align = "left">
+     <a href="{{=URL('index_order_by_date')}}"><button  class = "btn btn-primary btn-lg">order by newly posted</button></a>  <a href="{{=URL('index_order_by_cost')}}"> <button  class = "btn btn-primary btn-lg">order by old posted</button></a>
+    {{for row in rows:}}
+ <a href = "{{=URL('show',args=row.id)}}"><h3><b> From : {{=row.From_}} To : {{=row.To_}}  On: {{=row.On_}}</b></h3></a>
+    <h3 style = "text-align : right">{{=row.Cost_ }} INR</h3>
+    {{pass}}
+     </div>
+</div>

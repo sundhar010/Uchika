@@ -1,0 +1,12 @@
+# -*- coding: utf-8 -*-
+#db.define_table('post',
+#                Field('From_','string',requires = IS_NOT_EMPTY()),
+#                Field('On_','datetime',requires = IS_NOT_EMPTY()),
+#                Field('Cost_','integer',requires = IS_NOT_EMPTY()))
+db.define_table('posts',
+                Field('From_','string',requires = IS_NOT_EMPTY()),
+                Field('To_','string',requires = IS_NOT_EMPTY()),
+                Field('On_','date',requires = IS_NOT_EMPTY()),
+                Field('Cost_','integer',requires = IS_NOT_EMPTY()),
+                Field('Auth_id','id',requires = IS_NOT_EMPTY()),
+                auth.signature)

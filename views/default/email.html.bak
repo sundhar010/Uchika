@@ -1,0 +1,3 @@
+{{extend 'plugin_layouts/layouts/Boorish.html'}}
+<p>A mail has been sent to this oferer requesting {{=no}} number of seats he will contact you through mail if he is intrested to offer you a ride</p>
+<h3 align = "center">Thanks for using our servises</h3>

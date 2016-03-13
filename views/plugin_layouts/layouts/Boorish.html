@@ -1,0 +1,49 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+ <head>
+  <title>
+   UchiKa
+  </title>
+     {{response.files.append(URL(request.application,'static','css/bootstrap-theme.min.css'))}}
+     {{response.files.append(URL(request.application,'static','css/bootstrap.min.css'))}} 
+     {{response.files.append(URL(request.application,'static','css/Web2py-bootstrap3.min.css'))}}
+  {{response.files.append(URL(request.application,'static','plugin_layouts/layouts/Boorish/default.css'))}}
+  {{response.files.append(URL('static','plugin_layouts/superfish.js'))}}
+  {{include 'web2py_ajax.html'}}
+   <style>
+ul.web2py-menu-vertical { width: 150px; position: relative; top:1em; left:1em;  z-index:30; border:0; margin:0; padding: 0; list-style: none; text-decoration: none;}
+ul.web2py-menu-vertical li { margin:0; padding:0; border:0; width: 150px; background: black; text-align:left;}
+ul.web2py-menu-vertical li a { margin:0; padding: 1px 3px 1px 3px; border:0; width: 144px; color: white; font-size:12px;}
+div.flash { position: fixed; float: right; padding: 20px; top: 10px; right: 30px; opacity: 1; margin: 160px 20px 20px 20px; text-align: center; clear: both; color: #fff; font-size: 15pt; text-align: center; vertical-align: middle; cursor: pointer; background: #008C00; border: 2px solid #fff; -moz-border-radius: 5px; -webkit-border-radius: 5px; z-index: 2;border-radius:25px; }
+div.error { background-color: red; color: black; padding: 3px; }
+.auth_navbar { text-align:right; color : black; z-index:20; position: absolute; top: 10px; right:30px; border:100; padding:0 }
+  </style>    
+ </head>
+ <body>
+     <div style="font-size:large;">
+{{try:}}{{=auth.navbar(action=URL('default','user'))}}{{except:pass}}
+     </div>
+ <div id="header">
+   <div id="logo" >
+       <div style="float:left;width:250px;padding-bottom:85px;" >
+    <a href ={{=URL('#')}}><h1 style = "margin-right:40px;">
+     UchiKa
+        </h1></a>
+       </div>
+   <div id="menu" style="float:left padding-right:50px">
+    {{=MENU(response.menu,_class='web2py-menu')}}
+    <!--script>
+      jQuery(document).ready(function(){jQuery('ul.web2py-menu').superfish({delay:100});});
+    </script-->
+   </div>
+    </div>
+  </div>
+  <div id="page">
+   <div id="content">
+    <div class="flash">{{=response.flash or ''}}</div>
+    {{include}}
+      </div>
+     </div>
+ </body>
+</html>

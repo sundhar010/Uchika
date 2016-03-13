@@ -1,0 +1,26 @@
+{{extend 'plugin_layouts/layouts/Boorish.html'}}
+<script>
+$(document).ready(function(){
+ $('#posts_From_').blur(function(){
+     var x = 'JI';
+ajax('{{=URL('via',args="zcds")}}',[],':eval');
+     return false;
+});});
+</script>
+<head>
+    <style>
+        .Take{
+            height:400px;
+            width:500px;
+            
+        }
+        .quat{
+            height:60px;
+        }
+    </style>
+</head>
+<div><h1><b>Share your ride and save  money :) <b></h1></div>
+<div class = "Take">
+    <h2><b>Offer a Ride</b></h2>
+    {{=form}}
+</div>

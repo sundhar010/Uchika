@@ -1,0 +1,4 @@
+{{extend 'plugin_layouts/layouts/Boorish.html'}}
+{{for i in range(no):}}
+    {{=inf}}
+{{pass}}

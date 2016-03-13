@@ -1,0 +1,20 @@
+{{extend 'plugin_layouts/layouts/Boorish.html'}}
+{{page+=1}}
+{{if len(rows)==0:}}
+<h1 align = "center"> There are no suggestions on {{=today}}</h1>
+{{if previousday>datetime.date.today():}}
+<div><a href="{{=URL('posts',vars = {'from_':From,'to_':to,'on_' : previousday})}}"><button class = "glyphicon glyphicon-chevron-left" style = "float:left;background-color:powderblue">Check for previous day</button></a>    <a href="{{=URL('posts',vars = {'from_':From,'to_':to,'on_' : nextday})}}"><button class = "glyphicon glyphicon-chevron-right" style = "float:right;background-color:powderblue">Check for next day</button></a></div>
+{{pass}}
+{{if previousday <= datetime.date.today() :}}
+                                       <div><a href="{{=URL('posts',vars = {'from_':From,'to_':to,'on_' : nextday})}}"><button class = "glyphicon glyphicon-chevron-right" style = "float:right;background-color:powderblue">Check for next day</button></a></div>
+{{pass}}
+{{pass}}
+{{if len(rows)!=0:}}
+<h3 style = "float:right">{{=count}} avalble </h3>
+<h1>List of all suggestions</h1>
+    {{for row in rows:}}
+<div class = "well"> <a href = "{{=URL('show',args=row.id)}}"><h3><b> From : {{=row.From_}} To : {{=row.To_}} </b></h3></a>
+    <h3 style = "text-align : right">{{=row.Cost_ }} INR</h3></div>
+    {{pass}}
+<!--div align=left><a href="{{=URL('posts')}}"><button type="button" class="btn btn-info" >Next page</button></a></div-->
+{{pass}}

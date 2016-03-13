@@ -1,0 +1,13 @@
+{{extend 'plugin_layouts/layouts/Boorish.html'}}
+{{page+=1}}
+{{if len(rows) ==0:}}
+<h1>No more posts.</h1>
+{{pass}}
+{{if len(rows)!=0:}}
+<h2>All the rides offered by {{=name}}</h2>
+{{for row in rows:}}
+<div class = "well"> <h3 style = "color : black"><b> From : {{=row.From_}} To : {{=row.To_}} </b></h3>
+    <h3 style = "text-align : right">{{=row.Cost_ }} INR</h3></div>
+    {{pass}}
+<!--div ><a href="{{=URL('show_his_posts')}}"><button type="button" class="btn btn-info" >Next page</button></a></div-->
+{{pass}}

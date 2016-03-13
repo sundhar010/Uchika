@@ -1,0 +1,100 @@
+#127.0.0.1:8000/uchika/default/index ------> for home page
+#127.0.0.1:8000/uchika/default/take ------> for taking a ride
+#127.0.0.1:8000/uchika/default/posts?from_=*****&on_=*****&to_=****  ------> shows all posts
+#127.0.0.1:8000/uchika/default/show/(arg as id) ---------> shows the post with id
+#127.0.0.1:8000/uchika/default/offer ------>requirs auth if(auth) form to offer
+#127.0.0.1:8000/uchika/default/myposts ------> requirs auth if(auth) shows all recent posts
+
+
+POSTS_PER_PAGE = 10
+def index():
+    return locals()
+
+
+def take():
+    get = SQLFORM.factory(Field('From','string',requires = IS_NOT_EMPTY()),
+                          Field('To','string',requires = IS_NOT_EMPTY()),
+                          Field('On','date',requires = IS_DATE_IN_RANGE(format=T('%Y-%m-%d'),
+                                                               minimum=datetime.date(2015,10,22),
+                                                               maximum=None,
+                                                               error_message='Enter a valid date'))).process()
+    if get.accepted:
+        redirect(URL('posts',vars = {'from_':get.vars.From,'to_':get.vars.To,'on_' : get.vars.On}))
+    return locals()
+
+
+def posts():
+    page = request.args(0,cast=int,default = 0)
+    start = page*POSTS_PER_PAGE
+    stop = start + POSTS_PER_PAGE
+    rows = db((db.posts.From_==request.vars.from_) & (db.posts.To_==request.vars.to_) & (db.posts.On_==request.vars.on_ ) ).select(orderby=~db.posts.created_on , limitby=(start,stop ))
+    return locals()
+
+
+def show():
+    q=request.args(0)
+    show = db.posts[q]
+    count = db(db.posts.created_by == show.created_by).count()
+    return locals()
+
+def show_his_posts():
+    user_id = request.args(0)
+    name = auth_user.user_id.first_name
+    rows = db(db.posts.created_by == user_id).select()
+    return locals()
+
+@auth.requires_login()
+def myposts():
+    rows = db(db.posts.created_by == auth.user.id).select(orderby=~db.posts.created_on)
+    return locals()
+
+
+@auth.requires_login()
+def offer():
+    form = SQLFORM(db.posts).process()
+    return locals()
+
+#def offer1():
+ ##  db.posts.Auth_id.writable = False
+    #db.posts.insert(Auth_id = auth.user.id)
+    #form = SQLFORM(db.posts).process()
+    #return locals()
+
+
+
+def user():
+    """
+    exposes:
+    http://..../[app]/default/user/login
+    http://..../[app]/default/user/logout
+    http://..../[app]/default/user/register
+    http://..../[app]/default/user/profile
+    http://..../[app]/default/user/retrieve_password
+    http://..../[app]/default/user/change_password
+    http://..../[app]/default/user/manage_users (requires membership in
+    http://..../[app]/default/user/bulk_register
+    use @auth.requires_login()
+        @auth.requires_membership('group name')
+        @auth.requires_permission('read','table name',record_id)
+    to decorate functions that need access control
+    """
+    return dict(form=auth())
+
+
+@cache.action()
+def download():
+    """
+    allows downloading of uploaded files
+    http://..../[app]/default/download/[filename]
+    """
+    return response.download(request, db)
+
+
+def call():
+    """
+    exposes services. for example:
+    http://..../[app]/default/call/jsonrpc
+    decorate with @services.jsonrpc the functions to expose
+    supports xml, json, xmlrpc, jsonrpc, amfrpc, rss, csv
+    """
+    return service()
